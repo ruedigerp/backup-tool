@@ -1,0 +1,69 @@
+#!/bin/bash
+
+readconfig() {
+    . ${BASEPATH}/etc/${MYNAME}
+	DESTBASE=${BASEPATH}/${DESTDIR}/${MYNAME}
+}
+
+checkdestdir() {
+    if [ ! -d ${DESTBASE} ];
+    then
+        echo_warn "	Directory ${DESTBASE} not exists";
+        mkdir -p ${DESTBASE}
+    else
+        echo_ok "	Directory ${DESTBASE} exists";
+    fi
+
+}
+
+todayyesterday() {
+    DEST="$DESTBASE/$(date +%Y-%m-%d)"
+    # Where to find yesterday's backup
+    YESTERDAY="$DESTBASE/$(date -d yesterday +%Y-%m-%d)/"
+}
+
+checkyesterday() {
+    if [ -d "$YESTERDAY" ]
+    then
+		echo_ok "\t\tYesterdays Backup '${YESTERDAY}' found, \n\t\t\tcreate incremental backup."
+		OPTS="--link-dest $YESTERDAY"
+	else
+		echo_warn "\t\tYesterdays Backup '${YESTERDAY}' not exists, \n\t\t\tcreate full backup"
+    fi
+}
+
+createbackup() {
+	if [ -e ${BASEPATH}/.dry-run ]; then
+		echo_warn "dry-run: rsync -av $OPTS \"$SOURCE\" \"$DEST\"" 
+	else
+		rsync -av $OPTS "$SOURCE" "$DEST" 
+	fi
+}
+
+echo_ok() {
+	GREEN='\033[0;32m'
+	RED='\033[0;31m'
+	NC='\033[0m'
+	printf "${GREEN}${1}${NC}\n"
+}
+
+echo_info() {
+	GREEN='\033[0;32m'
+	ORANGE='\033[0;33m'
+	RED='\033[0;31m'
+	NC='\033[0m'
+	printf "${ORANGE}${1}${NC}\n"
+}
+
+echo_warn() {
+	GREEN='\033[0;32m'
+	ORANGE='\033[0;33m'
+	RED='\033[0;31m'
+	NC='\033[0m'
+	printf "${RED}${1}${NC}\n"
+}
+
+
+
+
+

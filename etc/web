@@ -1,0 +1,2 @@
+SOURCE=your.server.net:/srv/customer/
+DESTDIR=your.server.net
