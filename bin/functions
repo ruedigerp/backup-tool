@@ -19,7 +19,12 @@ checkdestdir() {
 todayyesterday() {
     DEST="$DESTBASE/$(date +%Y-%m-%d)"
     # Where to find yesterday's backup
-    YESTERDAY="$DESTBASE/$(date -d yesterday +%Y-%m-%d)/"
+	system_type=$(uname -s)
+	if [ "$system_type" = "Darwin" ]; then
+		YESTERDAY="$DESTBASE/$(date -j -v -1d +%Y-%m-%d)/"
+	else 
+    	YESTERDAY="$DESTBASE/$(date -d yesterday +%Y-%m-%d)/"
+	fi
 }
 
 checkyesterday() {
