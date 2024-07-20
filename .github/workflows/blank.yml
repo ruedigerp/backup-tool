@@ -41,7 +41,7 @@ jobs:
       - name: create-folder ${{ env.ARCHIVE_NAME }}
         run: mkdir ${{ env.ARCHIVE_NAME }}
       - name: copy files 
-        run: cp -av * ${{ env.ARCHIVE_NAME }}
+        run: cp -av bin etc enabled run.sh README.md ${{ env.ARCHIVE_NAME }}
       - name: create-archive
         run: tar -czf "$ARCHIVE_NAME".tar.gz ${{ env.ARCHIVE_NAME }}
       - name: create-checksum
