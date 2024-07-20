@@ -4,3 +4,5 @@ mail03.tytik.cloud
 backup.log
 backup-tool.tar.gz
 test.sh
+tests
+tests/*
