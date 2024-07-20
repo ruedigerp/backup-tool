@@ -38,9 +38,12 @@ jobs:
       #   run: |
       #     echo Add other actions to build,
       #     echo test, and deploy your project.
-
+      - name: create-folder ${{ env.ARCHIVE_NAME }}
+        run: mkdir ${{ env.ARCHIVE_NAME }}
+      - name: copy files 
+        run: cp -av * ${{ env.ARCHIVE_NAME }}
       - name: create-archive
-        run: tar -czf "$ARCHIVE_NAME".tar.gz .
+        run: tar -czf "$ARCHIVE_NAME".tar.gz ${{ env.ARCHIVE_NAME }}
       - name: create-checksum
         run: sha256sum "$ARCHIVE_NAME".tar.gz >checksum.txt
       - name: upload-archive
