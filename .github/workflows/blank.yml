@@ -95,31 +95,31 @@ jobs:
           VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
           sha256sum "$ARCHIVE_NAME-$VERSION".tar.gz >checksum.txt
 
-      - name: Create the release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+      # - name: Create the release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ github.ref }}
+      #     release_name: Release ${{ github.ref }}
+      #     draft: false
+      #     prerelease: false
 
-      - name: "Get upload_url"
-        run: echo "::set-output name=upload_url::https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets{?name,label}"  
-        id: release
+      # - name: "Get upload_url"
+      #   run: echo "::set-output name=upload_url::https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets{?name,label}"  
+      #   id: release
 
-      - name: Upload the package as release asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.ARCHIVE_NAME }}-$VERSION.tar.gz
-          asset_name: ${{ env.ARCHIVE_NAME }}-$VERSION.tar.gz
-          asset_content_type: application/x-compressed-tar
+      # - name: Upload the package as release asset
+      #   id: upload-release-asset 
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: ./${{ env.ARCHIVE_NAME }}-$VERSION.tar.gz
+      #     asset_name: ${{ env.ARCHIVE_NAME }}-$VERSION.tar.gz
+      #     asset_content_type: application/x-compressed-tar
 
       # - name: upload-archive
       #   uses: actions/upload-release-asset@v1
