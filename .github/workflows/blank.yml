@@ -104,13 +104,17 @@ jobs:
           VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
           sha256sum "$ARCHIVE_NAME-$VERSION".tar.gz >checksum.txt
 
+      - name: "Get upload_url"
+        run: echo "::set-output name=upload_url::https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets{?name,label}"  
+        id: release
+
       - name: Upload the package as release asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.build.outputs.upload_url }}
           asset_path: ./${{ env.ARCHIVE_NAME }}-$VERSION.tar.gz
           asset_name: ${{ env.ARCHIVE_NAME }}-$VERSION.tar.gz
           asset_content_type: application/x-compressed-tar
