@@ -13,15 +13,19 @@ logstart
 if [ -e ${BASEPATH}/.off ]; then
 	echo_warn "Off"
 else
-	echo_ok "Running" 
 	readconfig
-	echo_ok "\tSource: ${SOURCE}"
-	echo_ok "\tDESTBASE: ${DESTBASE}"
-	checkdestdir
-	todayyesterday
-	echo_ok "\tCreate incremental backup \n\t\tTrom: ${YESTERDAY} \n\t\tTo: ${DEST}" 
-	checkyesterday
-	createbackup
+	if [ "${ACTIVE}" == "0" ]; then
+		echo_warn "${MYNAME} is disabled."
+	else
+		echo_ok "Running" 
+		# echo_ok "\tSource: ${SOURCE}"
+		# echo_ok "\tDESTBASE: ${DESTBASE}"
+		# checkdestdir
+		# todayyesterday
+		# echo_ok "\tCreate incremental backup \n\t\tTrom: ${YESTERDAY} \n\t\tTo: ${DEST}" 
+		# checkyesterday
+		# createbackup
+	fi
 fi 
 
 logend

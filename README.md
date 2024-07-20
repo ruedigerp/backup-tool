@@ -14,6 +14,7 @@ If Bind is also installed on the server and you want to back it up as well, simp
 
 Inhalt: 
 
+    ACTIVE=1s
     SOURCE=web001.domain.tld:/etc/${MYNAME}/
     DESTDIR=web001.domain.tld
 
