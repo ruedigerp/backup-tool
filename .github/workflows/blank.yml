@@ -90,7 +90,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
-          cp -av bin etc enabled run.sh README.md ${{ env.ARCHIVE_NAME }}--$VERSION
+          cp -av bin etc enabled run.sh README.md ${{ env.ARCHIVE_NAME }}-$VERSION
       - name: create-archive
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
