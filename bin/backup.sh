@@ -1,11 +1,14 @@
 #!/bin/bash
 
+
 MYPATH="$(dirname "$(realpath $0)")"
 MYNAME=$(basename $0)
-echo -n "Name: ${MYNAME}: "  
+echo "Name: ${MYNAME} "  
 BASEPATH=${1}
 
 . ${BASEPATH}/bin/functions
+
+logstart
 
 if [ -e ${BASEPATH}/.off ]; then
 	echo_warn "Off"
@@ -21,3 +24,4 @@ else
 	createbackup
 fi 
 
+logend

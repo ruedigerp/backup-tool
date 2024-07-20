@@ -5,6 +5,14 @@ readconfig() {
 	DESTBASE=${BASEPATH}/${DESTDIR}/${MYNAME}
 }
 
+logstart() {
+	echo_info "Backup '${MYNAME}' started at: $(date)"
+}
+
+logend() {
+	echo_info "Backup '${MYNAME}' ended at: $(date)"
+}
+
 checkdestdir() {
     if [ ! -d ${DESTBASE} ];
     then
