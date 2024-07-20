@@ -14,7 +14,8 @@ on:
   workflow_dispatch:
 
 env:
-    ARCHIVE_NAME: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}
+    ARCHIVE_NAME: ${{ github.event.repository.name }}
+    # -${{ github.event.release.tag_name }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -35,8 +36,8 @@ jobs:
         # - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         #   run: npm audit signatures
       - name: Create Sematic Release Version
-        # env:
-          # GITHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
             export HOME=/tmp
             git config --global user.email "ruediger@pretzlaff.info"
