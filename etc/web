@@ -1,3 +1,3 @@
-ACTIVE=0
+ACTIVE=1
 SOURCE=your.server.net:/srv/customer/
 DESTDIR=your.server.net

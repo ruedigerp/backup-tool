@@ -53,26 +53,28 @@ createbackup() {
 	fi
 }
 
-echo_ok() {
-	GREEN='\033[0;32m'
+colors() {
 	RED='\033[0;31m'
+	GRREN='\033[0;32m'
+	ORANGE='\033[0;33m'
+	BLUE='\033[0;34m'
+	MAGENTA='\033[0;35m'
+	CYAN='\033[0;36m'
 	NC='\033[0m'
-	printf "${GREEN}${1}${NC}\n"
+}
+
+echo_ok() {
+	colors
+	printf "${CYAN}${1}${NC}\n"
 }
 
 echo_info() {
-	GREEN='\033[0;32m'
-	ORANGE='\033[0;33m'
-	RED='\033[0;31m'
-	NC='\033[0m'
-	printf "${ORANGE}${1}${NC}\n"
+	colors
+	printf "${BLUE}${1}${NC}\n"
 }
 
 echo_warn() {
-	GREEN='\033[0;32m'
-	ORANGE='\033[0;33m'
-	RED='\033[0;31m'
-	NC='\033[0m'
+	colors
 	printf "${RED}${1}${NC}\n"
 }
 
