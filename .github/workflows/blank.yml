@@ -74,18 +74,26 @@ jobs:
       #     echo Add other actions to build,
       #     echo test, and deploy your project.
       - name: create-folder ${{ env.ARCHIVE_NAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
           mkdir ${{ env.ARCHIVE_NAME }}-$VERSION
       - name: copy files 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
           cp -av bin etc enabled run.sh README.md ${{ env.ARCHIVE_NAME }}--$VERSION
       - name: create-archive
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
           tar -czf "$ARCHIVE_NAME-$VERSION".tar.gz ${{ env.ARCHIVE_NAME }}-$VERSION
       - name: create-checksum
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
           sha256sum "$ARCHIVE_NAME-$VERSION".tar.gz >checksum.txt
