@@ -18,13 +18,13 @@ else
 		echo_warn "${MYNAME} is disabled."
 	else
 		echo_ok "Running" 
-		# echo_ok "\tSource: ${SOURCE}"
-		# echo_ok "\tDESTBASE: ${DESTBASE}"
-		# checkdestdir
-		# todayyesterday
-		# echo_ok "\tCreate incremental backup \n\t\tTrom: ${YESTERDAY} \n\t\tTo: ${DEST}" 
-		# checkyesterday
-		# createbackup
+		echo_ok "\tSource: ${SOURCE}"
+		echo_ok "\tDESTBASE: ${DESTBASE}"
+		checkdestdir
+		todayyesterday
+		echo_ok "\tCreate incremental backup \n\t\tTrom: ${YESTERDAY} \n\t\tTo: ${DEST}" 
+		checkyesterday
+		createbackup
 	fi
 fi 
 
