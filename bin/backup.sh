@@ -1,12 +1,13 @@
 #!/bin/bash
 
-
 MYPATH="$(dirname "$(realpath $0)")"
 MYNAME=$(basename $0)
 echo "Name: ${MYNAME} "  
 BASEPATH=${1}
 
 . ${BASEPATH}/bin/functions
+
+backupconfig
 
 logstart
 
@@ -24,7 +25,11 @@ else
 		todayyesterday
 		echo_ok "\tCreate incremental backup \n\t\tTrom: ${YESTERDAY} \n\t\tTo: ${DEST}" 
 		checkyesterday
-		createbackup
+		if [ "$BACKUPTYPE" == "DATE" ]; then 
+			createbydate
+		elif [ "$BACKUPTYPE" == "WEEKLY" ]; then
+			createbyweekly
+		fi
 	fi
 fi 
 

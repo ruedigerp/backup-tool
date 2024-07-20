@@ -2,6 +2,13 @@
 
 ## Create config 
 
+Config in etc/backup.conf
+
+content:
+
+    # Backup type: DATE, WEEKLY
+    BACKUPTYPE="DATE"
+
 Create a file in the ./etc/ directory for each backup. For example, if you want to back up the nginx configuration, use etc/nginx with the following content:
 
     SOURCE=web001.domain.tld:/etc/${MYNAME}/
@@ -12,9 +19,9 @@ DESTDIR is the directory where all backups for nginx are stored.
 
 If Bind is also installed on the server and you want to back it up as well, simply create a file in `etc/` with the name `bind`.
 
-Inhalt: 
+Content: 
 
-    ACTIVE=1s
+    ACTIVE=1
     SOURCE=web001.domain.tld:/etc/${MYNAME}/
     DESTDIR=web001.domain.tld
 
@@ -23,6 +30,22 @@ Inhalt:
     cd enabled
     ln -nfs ../bin/backup.sh nginx 
     ln -nfs ../bin/backup.sh bind
+    cd -
+
+## Local folder Backup
+
+The backup tool can also back up local folders.
+
+Content local.conf:
+
+    ACTIVE=1
+    SOURCE=tests/source/
+    DESTDIR=tests/dest
+
+## Activate backup  
+
+    cd enabled
+    ln -nfs ../bin/backup.sh local 
     cd -
 
 ## Run Backup:

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+backupconfig() {
+	source ${BASEPATH}/etc/backup.conf
+}
+
 readconfig() {
     . ${BASEPATH}/etc/${MYNAME}
 	DESTBASE=${BASEPATH}/${DESTDIR}/${MYNAME}
@@ -25,32 +29,57 @@ checkdestdir() {
 }
 
 todayyesterday() {
-    DEST="$DESTBASE/$(date +%Y-%m-%d)"
     # Where to find yesterday's backup
 	system_type=$(uname -s)
-	if [ "$system_type" = "Darwin" ]; then
-		YESTERDAY="$DESTBASE/$(date -j -v -1d +%Y-%m-%d)/"
-	else 
-    	YESTERDAY="$DESTBASE/$(date -d yesterday +%Y-%m-%d)/"
+	if [ "$BACKUPTYPE" == "DATE" ]; then
+		DEST="$DESTBASE/$(date +%Y-%m-%d)"
+		if [ "$system_type" = "Darwin" ]; then
+			YESTERDAY="$DESTBASE/$(date -j -v -1d +%Y-%m-%d)/"
+		else 
+			YESTERDAY="$DESTBASE/$(date -d yesterday +%Y-%m-%d)/"
+		fi
+	else
+		DEST="$DESTBASE/$(date +%u)"
+		DOW=$(date +%u)
+		YESTERDAY=$(( ${DOW} - 1 ))
+		if [ $YESTERDAY -eq 0 ]; then
+			YESTERDAY=7
+		fi
+		YESTERDAY="$DESTBASE/${YESTERDAY}"
 	fi
+	echo_info "YESTERDAY: ${YESTERDAY} DEST: ${DEST}"
 }
 
 checkyesterday() {
     if [ -d "$YESTERDAY" ]
     then
 		echo_ok "\t\tYesterdays Backup '${YESTERDAY}' found, \n\t\t\tcreate incremental backup."
-		OPTS="--link-dest $YESTERDAY"
+		OPTS="--link-dest $YESTERDAY --delete"
 	else
+		OPTS="--delete"
 		echo_warn "\t\tYesterdays Backup '${YESTERDAY}' not exists, \n\t\t\tcreate full backup"
     fi
 }
 
-createbackup() {
+createbydate() {
 	if [ -e ${BASEPATH}/.dry-run ]; then
 		echo_warn "dry-run: rsync -av $OPTS \"$SOURCE\" \"$DEST\"" 
 	else
 		rsync -av $OPTS "$SOURCE" "$DEST" 
 	fi
+}
+
+createbyweekly() {
+	DOW="$(date +%u)"
+	DEST="$DESTBASE/$(date +%u)"
+	if [ -d "$YESTERDAY" ]
+	    then
+        OPTS="--link-dest $YESTERDAY --delete "
+	else
+		OPTS="--delete"
+    fi
+    mkdir ${YESTERDAY}
+	rsync -av $OPTS "$SOURCE" "$DEST" 
 }
 
 colors() {
