@@ -78,6 +78,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
+          echo $VERSION
+          ls -la 
           mkdir ${{ env.ARCHIVE_NAME }}-$VERSION
       - name: copy files 
         env:
