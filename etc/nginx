@@ -1,2 +1,3 @@
+ACTIVE=1
 SOURCE=your.server.net:/etc/${MYNAME}/
 DESTDIR=your.server.net
