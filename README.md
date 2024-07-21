@@ -1,6 +1,6 @@
 # Backup-Tool
 
-![Backup-Tool](IMG_9569.webp)
+![Backup-Tool](/docs/images/IMG_9569.webp)
 
 The backup tool creates a current copy of the source directory when executed. Depending on the configuration (Daily, Weekly), the target directory is named by date or weekday (Monday 1, Tuesday 2, ... Sunday 7). The target directories and files are created using hard links. Even if the source directory is, for example, 2 GB and the changes from the previous day are only a few MB, the directory will show 2 GB when checking disk usage. However, it contains only the MB of data that has changed. If the backup from the previous day or from one/more days is deleted, these data are still included in the current backup. This approach saves storage space while ensuring all data is included.
 

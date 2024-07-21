@@ -6,3 +6,4 @@ backup-tool.tar.gz
 test.sh
 tests
 tests/*
+bt-cli
